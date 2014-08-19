@@ -1,6 +1,8 @@
-# Hot Dog Princess -
+# Hot Dog Princess
 
-_"Their message says, Baby... Us... Trouble... Time."_
+![Hot Dog Princess](https://raw.githubusercontent.com/MatthewCallis/HotDogPrincess/master/hdp.png)
+
+_-- "Their message says, Baby... Us... Trouble... Time."_
 
 Integrate with the [Parature](http://www.parature.com/) API. It's gunna be so flippin' awesome!
 
@@ -37,3 +39,5 @@ You will need to make a copy of `spec/hotdogprincess.sample.yml` as `spec/hotdog
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+![It's gunna be so flippin' awesome!](https://raw.githubusercontent.com/MatthewCallis/HotDogPrincess/master/awesome.gif)
