@@ -83,7 +83,7 @@ module HotDogPrincess
         clean_customer.date_visited = Time.parse(customer['Date_Visited']['#text']).utc.to_date  if customer['Date_Visited']
 
         # Customer Role
-        if customer['Customer_Role'] and customer['Customer_Role']['Customer_Role']
+        if customer['Customer_Role'] and customer['Customer_Role']['CustomerRole']
           clean_customer.customer_role = OpenStruct.new
           clean_customer.customer_role.id   = customer['Customer_Role']['CustomerRole']['@id']
           clean_customer.customer_role.uid  = customer['Customer_Role']['CustomerRole']['@uid']
