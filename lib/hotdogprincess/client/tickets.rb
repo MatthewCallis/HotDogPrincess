@@ -154,6 +154,64 @@ module HotDogPrincess
           clean_ticket.ticket_attachments.attachments = ticket['Ticket_Attachments']['Attachments']
         end
 
+        # Custom Field
+        if ticket['Custom_Field']
+          clean_ticket.custom_field = OpenStruct.new
+
+          # Multple are returned as an Array, single as a Hash.
+          if ticket['Custom_Field'].class != Array
+            ticket['Custom_Field'] = [ticket['Custom_Field']]
+          end
+
+          ticket['Custom_Field'].each do |custom_field|
+            field = custom_field['@display-name'].name_to_key
+            clean_ticket.custom_field[field] = OpenStruct.new
+            clean_ticket.custom_field[field].id          = custom_field['@id']
+            clean_ticket.custom_field[field].required    = custom_field['@required'].downcase == 'true'  if custom_field['@required']
+            clean_ticket.custom_field[field].editable    = custom_field['@editable'].downcase == 'true'  if custom_field['@editable']
+            clean_ticket.custom_field[field].max_length  = custom_field['@max-length'].to_i  if custom_field['@max-length']
+            clean_ticket.custom_field[field].field_type  = custom_field['@field-type']  if custom_field['@field-type']
+            clean_ticket.custom_field[field].data_type   = custom_field['@data-type']  if custom_field['@data-type']
+            clean_ticket.custom_field[field].multi_value = custom_field['@multi-value'].downcase == 'true'  if custom_field['@multi-value']
+
+            # Get the value or values.
+            case custom_field['@data-type']
+            when 'string'
+              clean_ticket.custom_field[field].value = custom_field['#text']
+            when 'int'
+              clean_ticket.custom_field[field].value = custom_field['#text'].to_i
+            when 'date'
+              clean_ticket.custom_field[field].value = Time.parse(custom_field['#text']).utc.to_date
+            when 'boolean'
+              clean_ticket.custom_field[field].value = custom_field['#text'] == 'true'
+            when 'float'
+              clean_ticket.custom_field[field].value = custom_field['#text'].to_f
+            when 'option'
+              selected_options = []
+              custom_field['Option'].each do |option|
+                if option["@selected"] == 'true'
+                  selected_option = OpenStruct.new
+                  selected_option.id         = option["@id"]
+                  selected_option.view_order = option["@viewOrder"]
+                  selected_option.value      = option["Value"]
+                  selected_options.push selected_option
+                end
+              end
+              selected_options = selected_options.first  unless clean_ticket.custom_field[field].multi_value
+              clean_ticket.custom_field[field].value = selected_options
+            when 'entity'
+              clean_ticket.custom_field[field].value = nil
+            when 'attachment'
+              clean_ticket.custom_field[field].value = nil
+            else
+              clean_ticket.custom_field[field].value = nil
+            end
+
+            # Accessible through both the Display Name and ID
+            clean_ticket.custom_field[custom_field['@id']] = clean_ticket.custom_field[field]
+          end
+        end
+
         clean_ticket
       end
 

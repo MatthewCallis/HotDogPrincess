@@ -109,6 +109,64 @@ module HotDogPrincess
           clean_customer.status.name = customer['Status']['Status']["Name"]['#text']
         end
 
+        # Custom Field
+        if customer['Custom_Field']
+          clean_customer.custom_field = OpenStruct.new
+
+          # Multple are returned as an Array, single as a Hash.
+          if customer['Custom_Field'].class != Array
+            customer['Custom_Field'] = [customer['Custom_Field']]
+          end
+
+          customer['Custom_Field'].each do |custom_field|
+            field = custom_field['@display-name'].name_to_key
+            clean_customer.custom_field[field] = OpenStruct.new
+            clean_customer.custom_field[field].id          = custom_field['@id']
+            clean_customer.custom_field[field].required    = custom_field['@required'].downcase == 'true'  if custom_field['@required']
+            clean_customer.custom_field[field].editable    = custom_field['@editable'].downcase == 'true'  if custom_field['@editable']
+            clean_customer.custom_field[field].max_length  = custom_field['@max-length'].to_i  if custom_field['@max-length']
+            clean_customer.custom_field[field].field_type  = custom_field['@field-type']  if custom_field['@field-type']
+            clean_customer.custom_field[field].data_type   = custom_field['@data-type']  if custom_field['@data-type']
+            clean_customer.custom_field[field].multi_value = custom_field['@multi-value'].downcase == 'true'  if custom_field['@multi-value']
+
+            # Get the value or values.
+            case custom_field['@data-type']
+            when 'string'
+              clean_customer.custom_field[field].value = custom_field['#text']
+            when 'int'
+              clean_customer.custom_field[field].value = custom_field['#text'].to_i
+            when 'date'
+              clean_customer.custom_field[field].value = Time.parse(custom_field['#text']).utc.to_date
+            when 'boolean'
+              clean_customer.custom_field[field].value = custom_field['#text'] == 'true'
+            when 'float'
+              clean_customer.custom_field[field].value = custom_field['#text'].to_f
+            when 'option'
+              selected_options = []
+              custom_field['Option'].each do |option|
+                if option["@selected"] == 'true'
+                  selected_option = OpenStruct.new
+                  selected_option.id         = option["@id"]
+                  selected_option.view_order = option["@viewOrder"]
+                  selected_option.value      = option["Value"]
+                  selected_options.push selected_option
+                end
+              end
+              selected_options = selected_options.first  unless clean_customer.custom_field[field].multi_value
+              clean_customer.custom_field[field].value = selected_options
+            when 'entity'
+              clean_customer.custom_field[field].value = nil
+            when 'attachment'
+              clean_customer.custom_field[field].value = nil
+            else
+              clean_customer.custom_field[field].value = nil
+            end
+
+            # Accessible through both the Display Name and ID
+            clean_customer.custom_field[custom_field['@id']] = clean_customer.custom_field[field]
+          end
+        end
+
         clean_customer
       end
 

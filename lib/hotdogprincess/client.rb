@@ -1,6 +1,5 @@
 require "restclient"
 require "hotdogprincess/version"
-require "hotdogprincess/client"
 require "hotdogprincess/client/customers"
 require "hotdogprincess/client/tickets"
 require "hotdogprincess/client/slas"

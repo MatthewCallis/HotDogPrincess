@@ -1,4 +1,5 @@
 require 'hotdogprincess/client'
+require 'hotdogprincess/core_extensions'
 
 module HotDogPrincess
   class << self
