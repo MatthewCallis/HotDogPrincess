@@ -3,6 +3,7 @@ require "hotdogprincess/version"
 require "hotdogprincess/client"
 require "hotdogprincess/client/customers"
 require "hotdogprincess/client/tickets"
+require "hotdogprincess/client/slas"
 
 module HotDogPrincess
 
@@ -10,6 +11,7 @@ module HotDogPrincess
 
     include HotDogPrincess::Client::Customers
     include HotDogPrincess::Client::Tickets
+    include HotDogPrincess::Client::Slas
 
     def initialize(options = {})
       @host = options[:host]
