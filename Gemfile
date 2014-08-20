@@ -9,6 +9,7 @@ group :test do
   gem 'vcr', '~> 2.9.2'
   gem 'webmock', '>= 1.9'
   gem 'simplecov-rcov'
+  gem 'faker'
 end
 
 gemspec

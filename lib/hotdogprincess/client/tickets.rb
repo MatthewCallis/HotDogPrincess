@@ -40,9 +40,9 @@ module HotDogPrincess
         parse_ticket ticket['Ticket']
       end
 
-      def update_ticket(ticket)
+      def update_ticket(ticket_id, ticket)
         xml = Gyoku.xml(ticket)
-        ticket_xml = post "Ticket", xml
+        ticket_xml = put "Ticket/#{ticket_id}", xml
 
         parser = Nori.new
         new_ticket_xml = parser.parse ticket_xml
