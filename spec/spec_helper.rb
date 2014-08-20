@@ -2,6 +2,15 @@ require 'rubygems'
 require 'yaml'
 require 'rspec'
 
+require 'webmock'
+require 'webmock/rspec'
+
+require 'simplecov'
+require 'simplecov-rcov'
+
+SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+SimpleCov.start
+
 RSpec.configure do |config|
   config.before :suite do
     options = YAML.load_file 'spec/hotdogprincess.yml'

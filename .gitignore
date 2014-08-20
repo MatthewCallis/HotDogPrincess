@@ -2,3 +2,4 @@ spec/hotdogprincess.yml
 spec/vcr_cassettes
 .DS_Store
 notes/
+coverage/

@@ -14,8 +14,6 @@ module HotDogPrincess
     def initialize(options = {})
       @host = options[:host]
       @token = options[:token]
-      @username = options[:username]
-      @password = options[:password]
       @account_id = options[:account_id]
       @department_id = options[:department_id]
       @output_format = :json
@@ -36,21 +34,17 @@ module HotDogPrincess
       options = {
         content_type: :xml
       }.merge(options)
-      pp url
-      pp body
-      pp options
       @last_response = RestClient.post url, body, options
-      pp @last_response
-      clean_response @last_response
+      @last_response
     end
 
     def put(path, body, options = {})
-      url = "https://#{@host}/api/v1/#{@account_id}/#{@department_id}/#{path.to_s}?_token_=#{@token}"
+      url = "https://#{@host}/api/v1/#{@account_id}/#{@department_id}/#{path.to_s}?_token_=#{@token}&_enforceRequiredFields_=false"
       options = {
         content_type: :xml
       }.merge(options)
       @last_response = RestClient.put url, body, options
-      clean_response @last_response
+      @last_response
     end
 
     def delete(path, options = {})
@@ -60,21 +54,11 @@ module HotDogPrincess
         _token_: @token
       }.merge(options)
       @last_response = RestClient.delete url, { params: options }
-      clean_response @last_response
+      @last_response
     end
 
-    def head(path, options = {})
-      url = "https://#{@host}/api/v1/#{@account_id}/#{@department_id}/#{path.to_s}"
-      options = {
-        _output_: @output_format,
-        _token_: @token
-      }.merge(options)
-      @last_response = RestClient.head url, { params: options }
-      clean_response @last_response
-    end
-
-    def last_response
-      @last_response if defined? @last_response
+    def schema(object)
+      get "#{object.to_s}/schema"
     end
 
     def host=(value)
@@ -109,17 +93,18 @@ module HotDogPrincess
       @department_id
     end
 
-    def clean_response(response)
-      if response[0..3] == "\xEF\xBB\xBF"
-        response_hash = JSON.parse response[3..-1]
-      else
-        response_hash = JSON.parse response[3..-1]
-      end
-      response_hash
+    def last_response
+      @last_response if defined? @last_response
     end
 
-    def schema(object)
-      get "#{object.to_s}/schema"
+    def clean_response(response)
+      # "\xEF", "\xBB", "\xBF"
+      if response[0].ord == 239 and response[1].ord == 187 and response[2].ord == 191
+        response_hash = JSON.parse response[3..-1]
+      else
+        response_hash = JSON.parse response
+      end
+      response_hash
     end
 
   end

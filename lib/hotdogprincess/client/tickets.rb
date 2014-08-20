@@ -1,4 +1,5 @@
 require 'gyoku'
+require 'nori'
 require 'ostruct'
 
 module HotDogPrincess
@@ -34,19 +35,33 @@ module HotDogPrincess
         0
       end
 
-      def tickets_since(start_date, page_size = 100)
-        @tickets = get "Ticket", _pageSize_: page_size, Date_Created: start_date
-        @tickets["Entities"]
-      end
-
       def ticket(ticket_id, history = false)
         ticket = get "Ticket/#{ticket_id}", _history_: history
         parse_ticket ticket['Ticket']
       end
 
-      def create_ticket(*args)
-        xml = Gyoku.xml(args[:ticket])
-        post "Ticket", xml
+      def update_ticket(ticket)
+        xml = Gyoku.xml(ticket)
+        ticket_xml = post "Ticket", xml
+
+        parser = Nori.new
+        new_ticket_xml = parser.parse ticket_xml
+
+        ticket = get "Ticket/#{new_ticket_xml['Ticket']['@id']}", _history_: false
+
+        parse_ticket ticket['Ticket']
+      end
+
+      def create_ticket(ticket)
+        xml = Gyoku.xml(ticket)
+        ticket_xml = post "Ticket", xml
+
+        parser = Nori.new
+        new_ticket_xml = parser.parse ticket_xml
+
+        ticket = get "Ticket/#{new_ticket_xml['Ticket']['@id']}", _history_: false
+
+        parse_ticket ticket['Ticket']
       end
 
       def parse_ticket(ticket)
@@ -58,8 +73,8 @@ module HotDogPrincess
         clean_ticket.service_desk_uri = ticket['@service-desk-uri']
 
         # Dates
-        clean_ticket.date_created = Time.parse(ticket['Date_Created']['#text']).utc.to_date
-        clean_ticket.date_updated = Time.parse(ticket['Date_Updated']['#text']).utc.to_date
+        clean_ticket.date_created = Time.parse(ticket['Date_Created']['#text']).utc.to_date  if ticket['Date_Created']
+        clean_ticket.date_updated = Time.parse(ticket['Date_Updated']['#text']).utc.to_date  if ticket['Date_Updated']
 
         # Booleans
         clean_ticket.dont_overwrite_sla_in_rr              = ticket['Dont_Overwrite_Sla_In_Rr']['#text'].downcase == 'true'
