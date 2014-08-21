@@ -47,13 +47,34 @@ HotDogPrincess.client
 From here you can do all sorts of wonderful things:
 
 ```ruby
-# What was our schema again? I can't remember what's requited :(
+# Schema, Status, View
 client.schema 'Customer'
+client.schema 'Ticket'
+client.schema 'Sla'
 => {"?xml"=>{"@version"=>"1.0", "@encoding"=>"utf-8"}, "Customer"=> ...
+
+client.status 'Customer'
+client.status 'Ticket'
+client.status 'Sla'
+=> {"?xml"=>{"@version"=>"1.0", "@encoding"=>"utf-8"}, "entities"=> ...
+
 
 # Well that's neat, but XML? What the hell is wrong with you, is it 2001‽
 client.schema_json 'Customer'
-=> # See below.
+client.schema_json 'Ticket'
+client.schema_json 'Sla'
+=> # See below for important details about all JSON returns.
+
+client.status_json 'Customer'
+client.status_json 'Ticket'
+client.status_json 'Sla'
+=> "[{\"id\":16,\"uid\":\"123/456/Customer/status/10001\",\"href\":"...
+
+client.view 'Ticket'
+=> {"?xml"=>{"@version"=>"1.0", "@encoding"=>"utf-8"}, "Entities"=> ...
+
+client.view_json 'Ticket'
+=> "[{\"id\":7,\"uid\":\"123/456/Ticket/view/7\","...
 
 # Working with Customers / Tickets / SLAs
 # Raw XML: Page size defaults to 100 records.
@@ -96,6 +117,14 @@ customer = client.customer 10002
 ticket   = client.ticket 10001
 sla      = client.sla 1
 => #<OpenStruct id="1", uid="123/456/Sla/1", href="https://sandbox.parature.com/api/v1/123/456/Sla/1", name="System Default">
+
+# Searching: You search email with either exact match or a substring match.
+client.find_customer_by_email 'joe@exmaple.comz'
+=> [#<OpenStruct id="26553", uid="16115/16155/Customer/26553",
+
+substring = true
+client.find_customer_by_email 'gmail.com', substring
+=> [#<OpenStruct id="26553", uid="16115/16155/Customer/26553", x ~50
 
 # Creating Customers / Tickets: We are using https://github.com/savonrb/gyoku to create XML from Hashes, so see the docs for in-depth XML constructions.
 customer_hash = {

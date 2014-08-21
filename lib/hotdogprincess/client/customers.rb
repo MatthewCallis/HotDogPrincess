@@ -64,6 +64,19 @@ module HotDogPrincess
         parse_customer customer['Customer']
       end
 
+      def find_customer_by_email(email, substring = false)
+        query = 'Email'
+        query << '_like_'  if substring
+        customers = get 'Customer', "#{query}" => email
+
+        found_customers = []
+        customers["Entities"]["Customer"].each do |customer|
+          found_customers.push parse_customer customer
+        end
+
+        found_customers
+      end
+
       def parse_customer(customer)
         # Meta
         clean_customer = OpenStruct.new

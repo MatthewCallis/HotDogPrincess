@@ -104,6 +104,28 @@ module HotDogPrincess
       response_hash
     end
 
+    def status(object)
+      get "#{object.to_s}/status"
+    end
+
+    def status_json(object)
+      status = status(object)
+      status_hash = schema_parse(status['entities']['Status'])
+
+      JSON.generate(status_hash)
+    end
+
+    def view(object)
+      get "#{object.to_s}/view"
+    end
+
+    def view_json(object)
+      views = view(object)
+      views_hash = schema_parse(views['Entities']['View'])
+
+      JSON.generate(views_hash)
+    end
+
     def schema(object)
       get "#{object.to_s}/schema"
     end
@@ -113,6 +135,18 @@ module HotDogPrincess
       schema_hash = schema_parse_hash(schema[object])
 
       JSON.generate(schema_hash)
+    end
+
+    def schema_parse(input)
+      output = input
+      if input.class == Array
+        output = schema_parse_array(input)
+      elsif input.class == Hash
+        output = schema_parse_hash(input)
+      elsif input.class == String
+        output = schema_parse_string(input)
+      end
+      output
     end
 
     def schema_parse_array(input_array)
