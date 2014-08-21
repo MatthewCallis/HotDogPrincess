@@ -1,6 +1,7 @@
 module HotDogPrincess
   class CoreExtensions
     module String
+
       def name_to_key_camecase
         self.gsub(/[^a-z _-]/i, '')
             .gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
@@ -10,6 +11,7 @@ module HotDogPrincess
             .gsub(/(_)\1+/i, '_')
             .downcase
       end
+
       def name_to_key
         self.gsub(/[^a-z _-]/i, '')
             .tr(' ', '_')
@@ -17,6 +19,7 @@ module HotDogPrincess
             .gsub(/(_)\1+/i, '_')
             .downcase
       end
+
     end
   end
 end

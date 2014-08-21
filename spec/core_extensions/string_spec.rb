@@ -9,6 +9,7 @@ describe "HotDogPrincess::CoreExtensions::String" do
       expect(''.method(:name_to_key_camecase).owner).to eq HotDogPrincess::CoreExtensions::String
       expect(String.ancestors).to include(HotDogPrincess::CoreExtensions::String)
     end
+
     it "can convert the string name to a hash key style string" do
       expect('A_Complex_3_Name::==='.name_to_key_camecase).to eq 'a_complex_name'
       expect('Application'.name_to_key_camecase).to eq 'application'
@@ -42,6 +43,7 @@ describe "HotDogPrincess::CoreExtensions::String" do
       expect(''.method(:name_to_key).owner).to eq HotDogPrincess::CoreExtensions::String
       expect(String.ancestors).to include(HotDogPrincess::CoreExtensions::String)
     end
+
     it "can convert the string name to a hash key style string" do
       expect('A_Complex_3_Name::==='.name_to_key).to eq 'a_complex_name'
       expect('Application'.name_to_key).to eq 'application'

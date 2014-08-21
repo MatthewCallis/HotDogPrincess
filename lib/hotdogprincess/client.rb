@@ -58,10 +58,6 @@ module HotDogPrincess
       @last_response
     end
 
-    def schema(object)
-      get "#{object.to_s}/schema"
-    end
-
     def host=(value)
       @host = value
     end
@@ -106,6 +102,69 @@ module HotDogPrincess
         response_hash = JSON.parse response
       end
       response_hash
+    end
+
+    def schema(object)
+      get "#{object.to_s}/schema"
+    end
+
+    def schema_json(object)
+      schema = schema(object)
+      schema_hash = schema_parse_hash(schema[object])
+
+      JSON.generate(schema_hash)
+    end
+
+    def schema_parse_array(input_array)
+      output = []
+      input_array.each do |item|
+        if item.class == Array
+          output.push  schema_parse_array(item)
+        elsif item.class == Hash
+          output.push  schema_parse_hash(item)
+        elsif value.class == String
+          output.push schema_parse_string(item)
+        else
+          output.push  item
+        end
+      end
+      output
+    end
+
+    def schema_parse_hash(input_hash)
+      output = {}
+      input_hash.each do |key, value|
+        if value.class == Array
+          output[key.to_s.name_to_key] = schema_parse_array(value)
+        elsif value.class == Hash
+          output[key.to_s.name_to_key] = schema_parse_hash(value)
+        elsif value.class == String
+          output[key.to_s.name_to_key] = schema_parse_string(value)
+        else
+          output[key.to_s.name_to_key] = value
+        end
+      end
+      output
+    end
+
+    def schema_parse_string(input_string)
+      case input_string
+      when 'true'
+        true
+      when 'false'
+        false
+      else
+        # Check for Integers / Floats
+        if /^-?(?:[0-9]+|[0-9]*\.[0-9]+)$/ =~ input_string
+          if input_string.to_i == input_string.to_f
+            input_string.to_i
+          else
+            input_string.to_f
+          end
+        else
+          input_string
+        end
+      end
     end
 
   end

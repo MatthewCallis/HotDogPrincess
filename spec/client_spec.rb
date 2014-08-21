@@ -147,4 +147,20 @@ describe "HotDogPrincess::Client" do
     end
   end
 
+  it "#schema" do
+    VCR.use_cassette('client.schema Ticket') do
+      @schema = HotDogPrincess.client.schema('Ticket')
+    end
+    expect(@schema).not_to eq nil
+    expect(@schema.class).to eq Hash
+  end
+
+  it "#schema_json" do
+    VCR.use_cassette('client.schema Ticket') do
+      @schema = HotDogPrincess.client.schema_json('Ticket')
+    end
+    expect(@schema).not_to eq nil
+    expect(@schema.class).to eq String
+    expect(JSON.parse(@schema).class).to eq Hash
+  end
 end
