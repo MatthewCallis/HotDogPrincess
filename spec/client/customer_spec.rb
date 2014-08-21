@@ -29,15 +29,15 @@ describe "HotDogPrincess::Client::Customers" do
 
       target = @customers.first
       VCR.use_cassette 'client.customer' do
-        @customer = HotDogPrincess.client.customer target.id
+        @customer = HotDogPrincess.client.customer target[:id]
       end
 
-      expect(@customer.id).to eq target.id
-      expect(@customer.uid).to eq "#{HotDogPrincess.client.account_id}/#{HotDogPrincess.client.department_id}/Customer/#{target.id}"
-      expect(@customer.href).to eq "https://#{HotDogPrincess.client.host}/api/v1/#{HotDogPrincess.client.account_id}/#{HotDogPrincess.client.department_id}/Customer/#{target.id}"
-      expect(@customer.first_name).not_to be nil
-      expect(@customer.last_name).not_to be nil
-      expect(@customer.email).not_to be nil
+      expect(@customer[:id]).to eq target[:id]
+      expect(@customer[:uid]).to eq "#{HotDogPrincess.client.account_id}/#{HotDogPrincess.client.department_id}/Customer/#{target[:id]}"
+      expect(@customer[:href]).to eq "https://#{HotDogPrincess.client.host}/api/v1/#{HotDogPrincess.client.account_id}/#{HotDogPrincess.client.department_id}/Customer/#{target[:id]}"
+      expect(@customer[:first_name]).not_to be nil
+      expect(@customer[:last_name]).not_to be nil
+      expect(@customer[:email]).not_to be nil
     end
 
     it "can create a customer" do

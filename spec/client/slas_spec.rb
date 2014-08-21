@@ -28,13 +28,13 @@ describe "HotDogPrincess::Client::Slas" do
 
       target = @slas.first
       VCR.use_cassette 'client.sla' do
-        @sla = HotDogPrincess.client.sla target.id
+        @sla = HotDogPrincess.client.sla target[:id]
       end
 
-      expect(@sla.name).not_to eq(nil)
-      expect(@sla.id).to eq target.id
-      expect(@sla.uid).to eq "#{HotDogPrincess.client.account_id}/#{HotDogPrincess.client.department_id}/Sla/#{target.id}"
-      expect(@sla.href).to eq "https://#{HotDogPrincess.client.host}/api/v1/#{HotDogPrincess.client.account_id}/#{HotDogPrincess.client.department_id}/Sla/#{target.id}"
+      expect(@sla[:name]).not_to eq(nil)
+      expect(@sla[:id]).to eq target[:id]
+      expect(@sla[:uid]).to eq "#{HotDogPrincess.client.account_id}/#{HotDogPrincess.client.department_id}/Sla/#{target[:id]}"
+      expect(@sla[:href]).to eq "https://#{HotDogPrincess.client.host}/api/v1/#{HotDogPrincess.client.account_id}/#{HotDogPrincess.client.department_id}/Sla/#{target[:id]}"
     end
   end
 end

@@ -28,13 +28,13 @@ describe "HotDogPrincess::Client::Tickets" do
 
       target = @tickets.first
       VCR.use_cassette 'client.ticket' do
-        @ticket = HotDogPrincess.client.ticket target.id
+        @ticket = HotDogPrincess.client.ticket target[:id]
       end
 
-      expect(@ticket.department).not_to eq(nil)
-      expect(@ticket.id).to eq target.id
-      expect(@ticket.uid).to eq "#{HotDogPrincess.client.account_id}/#{@ticket.department.id}/Ticket/#{target.id}"
-      expect(@ticket.href).to eq "https://#{HotDogPrincess.client.host}/api/v1/#{HotDogPrincess.client.account_id}/#{@ticket.department.id}/Ticket/#{target.id}"
+      expect(@ticket[:department]).not_to eq(nil)
+      expect(@ticket[:id]).to eq target[:id]
+      expect(@ticket[:uid]).to eq "#{HotDogPrincess.client.account_id}/#{@ticket[:department][:id]}/Ticket/#{target[:id]}"
+      expect(@ticket[:href]).to eq "https://#{HotDogPrincess.client.host}/api/v1/#{HotDogPrincess.client.account_id}/#{@ticket[:department][:id]}/Ticket/#{target[:id]}"
     end
 
     it "can create a ticket" do

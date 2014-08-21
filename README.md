@@ -290,6 +290,17 @@ The JSON output has tried to stay readable and match the keys from the XML. Obje
 }
 ```
 
+#### Unimplemented Functionality
+
+Another useful thing about Hot Dog Princess is the GET/PUT/POST/DELETE methods are all available on the client, so any unimplemented feature could be constructed as needed, but it'd be awesome if you would just code and open a pull request.
+
+```ruby
+client.get 'Customer', "First_Name_like_" => "joe"
+=> {"?xml"=>{"@version"=>"1.0", "@encoding"=>"utf-8"}...
+```
+
+
+
 ## Contributing
 
 1. Fork it

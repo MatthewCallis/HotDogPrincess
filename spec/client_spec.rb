@@ -38,8 +38,9 @@ describe "HotDogPrincess::Client" do
 
     it "get" do
       VCR.use_cassette 'client.ticket get' do
-        ticket = HotDogPrincess.client.get "Ticket/#{@target.id}"
+        ticket = HotDogPrincess.client.get "Ticket/#{@target[:id]}"
         expect(ticket).not_to eq nil
+        expect(ticket["?xml"]).not_to eq nil
       end
     end
     # Need to mock these.
@@ -54,14 +55,14 @@ describe "HotDogPrincess::Client" do
     # it "put" do
     # More required fields than on post
     #   VCR.use_cassette 'client.ticket put' do
-    #     ticket = HotDogPrincess.client.put "Ticket/#{@target.id}", nil
+    #     ticket = HotDogPrincess.client.put "Ticket/#{@target[:id]}", nil
     #     expect(ticket).not_to eq nil
     #   end
     # end
     # it "delete" do
     # Returns a 204 no content on success
     #   VCR.use_cassette 'client.ticket delete' do
-    #     ticket = HotDogPrincess.client.delete "Ticket/#{@target.id}"
+    #     ticket = HotDogPrincess.client.delete "Ticket/#{@target[:id]}"
     #     expect(ticket).not_to eq nil
     #   end
     # end

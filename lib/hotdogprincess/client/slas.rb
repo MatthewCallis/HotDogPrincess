@@ -1,6 +1,5 @@
 require 'gyoku'
 require 'nori'
-require 'ostruct'
 
 module HotDogPrincess
   class Client
@@ -42,11 +41,11 @@ module HotDogPrincess
 
       def parse_sla(sla)
         # Meta
-        clean_sla = OpenStruct.new
-        clean_sla.id   = sla['@id']
-        clean_sla.uid  = sla['@uid']
-        clean_sla.href = sla['@href']
-        clean_sla.name = sla['Name']['#text']
+        clean_sla = {}
+        clean_sla[:id]   = sla['@id']
+        clean_sla[:uid]  = sla['@uid']
+        clean_sla[:href] = sla['@href']
+        clean_sla[:name] = sla['Name']['#text']
 
         clean_sla
       end
