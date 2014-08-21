@@ -95,16 +95,16 @@ tickets   = client.tickets_raw
 slas      = client.slas_raw
 => {"?xml"=>{"@version"=>"1.0", "@encoding"=>"utf-8"}, "Entities"=> {"@total"=>"12400", "@results"=>"100"...
 
-# OpenStruct: Page size defaults to 100 records, and force update defaults to false.
+# Hash: Page size defaults to 100 records, and force update defaults to false.
 customers = client.customers
 tickets   = client.tickets
 slas      = client.slas
-=> [#<OpenStruct id="10002", uid="123/456/Customer/10002", href="https:..."] x 100 of 12400
+=> [#<Hash id="10002", uid="123/456/Customer/10002", href="https:..."] x 100 of 12400
 
 customers = client.customers(50, true)
 tickets   = client.tickets(50, true)
 slas      = client.slas(50, true)
-=> [#<OpenStruct id="10002", uid="123/456/Customer/10002", href="https:..."] x 50 of 12401, we got a new entry since the last call!
+=> [#<Hash id="10002", uid="123/456/Customer/10002", href="https:..."] x 50 of 12401, we got a new entry since the last call!
 
 # Counts: Just for convenience.
 client.customer_count
@@ -116,15 +116,18 @@ client.sla_count
 customer = client.customer 10002
 ticket   = client.ticket 10001
 sla      = client.sla 1
-=> #<OpenStruct id="1", uid="123/456/Sla/1", href="https://sandbox.parature.com/api/v1/123/456/Sla/1", name="System Default">
+=> #<Hash id="1", uid="123/456/Sla/1", href="https://sandbox.parature.com/api/v1/123/456/Sla/1", name="System Default">
 
 # Searching: You search email with either exact match or a substring match.
 client.find_customer_by_email 'joe@exmaple.comz'
-=> [#<OpenStruct id="26553", uid="16115/16155/Customer/26553",
+=> [#<Hash id="26553", uid="16115/16155/Customer/26553",
+
+client.find_customer_by_email 'not_found@brandnewusers.io'
+=> []
 
 substring = true
 client.find_customer_by_email 'gmail.com', substring
-=> [#<OpenStruct id="26553", uid="16115/16155/Customer/26553", x ~50
+=> [#<Hash id="26553", uid="16115/16155/Customer/26553", x ~50
 
 # Creating Customers / Tickets: We are using https://github.com/savonrb/gyoku to create XML from Hashes, so see the docs for in-depth XML constructions.
 customer_hash = {
@@ -142,7 +145,7 @@ customer_hash = {
   }
 }
 customer = client.create_customer customer_hash
-=> #<OpenStruct id="10003", uid="123/456/Customer/10003", ...
+=> #<Hash id="10003", uid="123/456/Customer/10003", ...
 
 ticket_hash = {
   "Ticket" => {
@@ -164,14 +167,14 @@ ticket_hash = {
   }
 }
 ticket = client.create_ticket input_xml
-=> #<OpenStruct id="10004", uid="123/456/Ticket/10004", ...
+=> #<Hash id="10004", uid="123/456/Ticket/10004", ...
 
 # Update Customers / Tickets: Typically this returns an ID, but we instead fetch that ID and return the entire updated entity.
 client.update_customer 10003, customer_hash
-=> #<OpenStruct id="10003", uid="123/456/Customer/10003", ...
+=> #<Hash id="10003", uid="123/456/Customer/10003", ...
 
 client.update_ticket 10004, ticket_hash
-=> #<OpenStruct id="10004", uid="123/456/Ticket/10004", ...
+=> #<Hash id="10004", uid="123/456/Ticket/10004", ...
 
 # For more depth, have a peek at the source code.
 ```

@@ -66,7 +66,7 @@ module HotDogPrincess
       def parse_ticket(ticket)
         # Meta
         clean_ticket = {}
-        clean_ticket[:id]               = ticket['@id']
+        clean_ticket[:id]               = ticket['@id'].to_i
         clean_ticket[:uid]              = ticket['@uid']
         clean_ticket[:href]             = ticket['@href']
         clean_ticket[:service_desk_uri] = ticket['@service-desk-uri']
@@ -93,7 +93,7 @@ module HotDogPrincess
         # Queue
         if ticket['Ticket_Queue'] and ticket['Ticket_Queue']['Queue']
           clean_ticket[:ticket_queue] = {}
-          clean_ticket[:ticket_queue][:id]   = ticket['Ticket_Queue']['Queue']['@id']
+          clean_ticket[:ticket_queue][:id]   = ticket['Ticket_Queue']['Queue']['@id'].to_i
           clean_ticket[:ticket_queue][:uid]  = ticket['Ticket_Queue']['Queue']['@uid']
           clean_ticket[:ticket_queue][:href] = ticket['Ticket_Queue']['Queue']['@href']
           clean_ticket[:ticket_queue][:name] = ticket['Ticket_Queue']['Queue']["Name"]['#text']
@@ -102,7 +102,7 @@ module HotDogPrincess
         # SLA
         if ticket['Ticket_Sla'] and ticket['Ticket_Sla']['Sla']
           clean_ticket[:ticket_sla] = {}
-          clean_ticket[:ticket_sla][:id]   = ticket['Ticket_Sla']['Sla']['@id']
+          clean_ticket[:ticket_sla][:id]   = ticket['Ticket_Sla']['Sla']['@id'].to_i
           clean_ticket[:ticket_sla][:uid]  = ticket['Ticket_Sla']['Sla']['@uid']
           clean_ticket[:ticket_sla][:href] = ticket['Ticket_Sla']['Sla']['@href']
           clean_ticket[:ticket_sla][:name] = ticket['Ticket_Sla']['Sla']["Name"]['#text']
@@ -111,7 +111,7 @@ module HotDogPrincess
         # Status
         if ticket['Ticket_Status'] and ticket['Ticket_Status']['Status']
           clean_ticket[:ticket_status] = {}
-          clean_ticket[:ticket_status][:id]   = ticket['Ticket_Status']['Status']['@id']
+          clean_ticket[:ticket_status][:id]   = ticket['Ticket_Status']['Status']['@id'].to_i
           clean_ticket[:ticket_status][:uid]  = ticket['Ticket_Status']['Status']['@uid']
           clean_ticket[:ticket_status][:href] = ticket['Ticket_Status']['Status']['@href']
           clean_ticket[:ticket_status][:name] = ticket['Ticket_Status']['Status']["Name"]['#text']
@@ -120,7 +120,7 @@ module HotDogPrincess
         # Department
         if ticket['Department'] and ticket['Department']['Department']
           clean_ticket[:department] =  {}
-          clean_ticket[:department][:id]   = ticket['Department']['Department']["@id"]
+          clean_ticket[:department][:id]   = ticket['Department']['Department']["@id"].to_i
           clean_ticket[:department][:uid]  = ticket['Department']['Department']["@uid"]
           clean_ticket[:department][:href] = ticket['Department']['Department']["@href"]
           clean_ticket[:department][:name] = ticket['Department']['Department']["Name"]['#text']
@@ -129,7 +129,7 @@ module HotDogPrincess
         # Customer Service Represenative
         if ticket['Entered_By'] and ticket['Entered_By']['Csr']
           clean_ticket[:entered_by] = {}
-          clean_ticket[:entered_by][:id]        = ticket['Entered_By']['Csr']['@id']
+          clean_ticket[:entered_by][:id]        = ticket['Entered_By']['Csr']['@id'].to_i
           clean_ticket[:entered_by][:uid]       = ticket['Entered_By']['Csr']['@uid']
           clean_ticket[:entered_by][:href]      = ticket['Entered_By']['Csr']['@href']
           clean_ticket[:entered_by][:full_name] = ticket['Entered_By']['Csr']["Full_Name"]['#text']
@@ -138,7 +138,7 @@ module HotDogPrincess
         # Customer
         if ticket['Ticket_Customer'] and ticket['Ticket_Customer']['Customer']
           clean_ticket[:ticket_customer] = {}
-          clean_ticket[:ticket_customer][:id]        = ticket['Ticket_Customer']['Customer']['@id']
+          clean_ticket[:ticket_customer][:id]        = ticket['Ticket_Customer']['Customer']['@id'].to_i
           clean_ticket[:ticket_customer][:uid]       = ticket['Ticket_Customer']['Customer']['@uid']
           clean_ticket[:ticket_customer][:href]      = ticket['Ticket_Customer']['Customer']['@href']
           clean_ticket[:ticket_customer][:full_name] = ticket['Ticket_Customer']['Customer']["Full_Name"]['#text']
@@ -147,7 +147,7 @@ module HotDogPrincess
         # Attachements
         if ticket['Ticket_Attachments']
           clean_ticket[:ticket_attachments] = {}
-          clean_ticket[:ticket_attachments][:id]          = ticket['Ticket_Attachments']['@id']
+          clean_ticket[:ticket_attachments][:id]          = ticket['Ticket_Attachments']['@id'].to_i
           clean_ticket[:ticket_attachments][:uid]         = ticket['Ticket_Attachments']['@uid']
           clean_ticket[:ticket_attachments][:href]        = ticket['Ticket_Attachments']['@href']
           clean_ticket[:ticket_attachments][:attachments] = ticket['Ticket_Attachments']['Attachments']
@@ -166,7 +166,7 @@ module HotDogPrincess
             field = custom_field['@display-name'].name_to_key
             field_key = field.to_sym
             clean_ticket[:custom_field][field_key] = {}
-            clean_ticket[:custom_field][field_key][:id]          = custom_field['@id']
+            clean_ticket[:custom_field][field_key][:id]          = custom_field['@id'].to_i
             clean_ticket[:custom_field][field_key][:required]    = custom_field['@required'].downcase == 'true'  if custom_field['@required']
             clean_ticket[:custom_field][field_key][:editable]    = custom_field['@editable'].downcase == 'true'  if custom_field['@editable']
             clean_ticket[:custom_field][field_key][:max_length]  = custom_field['@max-length'].to_i  if custom_field['@max-length']
@@ -191,7 +191,7 @@ module HotDogPrincess
               custom_field['Option'].each do |option|
                 if option["@selected"] == 'true'
                   selected_option = {}
-                  selected_option[:id]         = option["@id"]
+                  selected_option[:id]         = option["@id"].to_i
                   selected_option[:view_order] = option["@viewOrder"]
                   selected_option[:value]      = option["Value"]
                   selected_options.push selected_option

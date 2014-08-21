@@ -55,5 +55,24 @@ describe "HotDogPrincess::Client::Customers" do
         expect(response).not_to be nil
       end
     end
+
+    describe '#find_customer_by_email' do
+      it 'returns nil for an empty search' do
+        VCR.use_cassette 'client.client.find_customer_by_email nil' do
+          response = HotDogPrincess.client.find_customer_by_email "invalid@invalid.invalid"
+          expect(response.class).to eq Array
+          expect(response).to eq []
+        end
+      end
+
+      it 'returns and array for a search with results' do
+        VCR.use_cassette 'client.client.find_customer_by_email valie' do
+          response = HotDogPrincess.client.find_customer_by_email "joe", true
+          expect(response.class).to eq Array
+          expect(response).not_to eq nil
+        end
+      end
+    end
+
   end
 end

@@ -69,8 +69,10 @@ module HotDogPrincess
         customers = get 'Customer', "#{query}" => email
 
         found_customers = []
-        customers["Entities"]["Customer"].each do |customer|
-          found_customers.push parse_customer customer
+        if customers and customers["Entities"] and customers["Entities"]["Customer"]
+          customers["Entities"]["Customer"].each do |customer|
+            found_customers.push parse_customer customer
+          end
         end
 
         found_customers
@@ -79,7 +81,7 @@ module HotDogPrincess
       def parse_customer(customer)
         # Meta
         clean_customer = {}
-        clean_customer[:id]               = customer['@id']
+        clean_customer[:id]               = customer['@id'].to_i
         clean_customer[:uid]              = customer['@uid']
         clean_customer[:href]             = customer['@href']
         clean_customer[:service_desk_uri] = customer['@service-desk-uri']
@@ -97,7 +99,7 @@ module HotDogPrincess
         # Customer Role
         if customer['Customer_Role'] and customer['Customer_Role']['CustomerRole']
           clean_customer[:customer_role] = {}
-          clean_customer[:customer_role][:id]   = customer['Customer_Role']['CustomerRole']['@id']
+          clean_customer[:customer_role][:id]   = customer['Customer_Role']['CustomerRole']['@id'].to_i
           clean_customer[:customer_role][:uid]  = customer['Customer_Role']['CustomerRole']['@uid']
           clean_customer[:customer_role][:href] = customer['Customer_Role']['CustomerRole']['@href']
           clean_customer[:customer_role][:name] = customer['Customer_Role']['CustomerRole']["Name"]['#text']
@@ -106,7 +108,7 @@ module HotDogPrincess
         # SLA
         if customer['Sla'] and customer['Sla']['Sla']
           clean_customer[:sla] = {}
-          clean_customer[:sla][:id]   = customer['Sla']['Sla']['@id']
+          clean_customer[:sla][:id]   = customer['Sla']['Sla']['@id'].to_i
           clean_customer[:sla][:uid]  = customer['Sla']['Sla']['@uid']
           clean_customer[:sla][:href] = customer['Sla']['Sla']['@href']
           clean_customer[:sla][:name] = customer['Sla']['Sla']["Name"]['#text']
@@ -115,7 +117,7 @@ module HotDogPrincess
         # Status
         if customer['Status'] and customer['Status']['Status']
           clean_customer[:status] = {}
-          clean_customer[:status][:id]   = customer['Status']['Status']['@id']
+          clean_customer[:status][:id]   = customer['Status']['Status']['@id'].to_i
           clean_customer[:status][:uid]  = customer['Status']['Status']['@uid']
           clean_customer[:status][:href] = customer['Status']['Status']['@href']
           clean_customer[:status][:name] = customer['Status']['Status']["Name"]['#text']
@@ -134,7 +136,7 @@ module HotDogPrincess
             field = custom_field['@display-name'].name_to_key
             field_key = field.to_sym
             clean_customer[:custom_field][field_key] = {}
-            clean_customer[:custom_field][field_key][:id]          = custom_field['@id']
+            clean_customer[:custom_field][field_key][:id]          = custom_field['@id'].to_i
             clean_customer[:custom_field][field_key][:required]    = custom_field['@required'].downcase == 'true'  if custom_field['@required']
             clean_customer[:custom_field][field_key][:editable]    = custom_field['@editable'].downcase == 'true'  if custom_field['@editable']
             clean_customer[:custom_field][field_key][:max_length]  = custom_field['@max-length'].to_i  if custom_field['@max-length']
@@ -159,7 +161,7 @@ module HotDogPrincess
               custom_field['Option'].each do |option|
                 if option["@selected"] == 'true'
                   selected_option = {}
-                  selected_option[:id]         = option["@id"]
+                  selected_option[:id]         = option["@id"].to_i
                   selected_option[:view_order] = option["@viewOrder"]
                   selected_option[:value]      = option["Value"]
                   selected_options.push selected_option
