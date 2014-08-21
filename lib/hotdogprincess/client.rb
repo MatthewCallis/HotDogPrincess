@@ -95,8 +95,9 @@ module HotDogPrincess
     end
 
     def clean_response(response)
+      return nil  unless response and response.class == String
+      return nil  unless response.length >= 3
       # "\xEF", "\xBB", "\xBF"
-      return nil  unless response
       if response[0].ord == 239 and response[1].ord == 187 and response[2].ord == 191
         response_hash = JSON.parse response[3..-1]
       else
