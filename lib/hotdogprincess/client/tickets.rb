@@ -26,7 +26,7 @@ module HotDogPrincess
       end
 
       def tickets_raw
-        @tickets
+        @tickets_raw
       end
 
       def ticket_count

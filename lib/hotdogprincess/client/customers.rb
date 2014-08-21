@@ -26,7 +26,7 @@ module HotDogPrincess
       end
 
       def customers_raw
-        @customers
+        @customers_raw
       end
 
       def customer_count

@@ -26,7 +26,7 @@ module HotDogPrincess
       end
 
       def slas_raw
-        @slas
+        @slas_raw
       end
 
       def sla_count
