@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     hotdogprincess (0.1.0)
-      gyoku
-      nori
+      gyoku (~> 1)
+      nori (~> 2)
 
 GEM
   remote: https://rubygems.org/
@@ -53,9 +53,9 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.0)
   faker
-  gyoku
+  gyoku (~> 1)
   hotdogprincess!
-  nori
+  nori (~> 2)
   rake
   rspec (~> 3.0.0)
   simplecov-rcov

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'gyoku'
-gem 'nori'
+gem 'gyoku', '~> 1'
+gem 'nori', '~> 2'
 
 group :test do
   gem 'rake'
