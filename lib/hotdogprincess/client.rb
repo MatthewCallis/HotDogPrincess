@@ -96,6 +96,7 @@ module HotDogPrincess
 
     def clean_response(response)
       # "\xEF", "\xBB", "\xBF"
+      return nil  unless response
       if response[0].ord == 239 and response[1].ord == 187 and response[2].ord == 191
         response_hash = JSON.parse response[3..-1]
       else
