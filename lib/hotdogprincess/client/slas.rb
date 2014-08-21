@@ -24,7 +24,9 @@ module HotDogPrincess
         @slas
       end
 
-      def slas_raw
+      def slas_raw(page_size = 100)
+        return @slas_raw  if @slas_raw
+        fetch_slas(page_size)
         @slas_raw
       end
 

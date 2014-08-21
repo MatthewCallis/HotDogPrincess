@@ -24,7 +24,9 @@ module HotDogPrincess
         @tickets
       end
 
-      def tickets_raw
+      def tickets_raw(page_size = 100)
+        return @tickets_raw  if @tickets_raw
+        fetch_tickets(page_size)
         @tickets_raw
       end
 

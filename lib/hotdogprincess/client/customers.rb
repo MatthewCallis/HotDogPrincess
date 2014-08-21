@@ -24,7 +24,9 @@ module HotDogPrincess
         @customers
       end
 
-      def customers_raw
+      def customers_raw(page_size = 100)
+        return @customers_raw  if @customers_raw
+        fetch_customers(page_size)
         @customers_raw
       end
 
