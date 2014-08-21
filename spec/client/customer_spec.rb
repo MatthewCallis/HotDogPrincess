@@ -69,7 +69,7 @@ describe "HotDogPrincess::Client::Customers" do
         VCR.use_cassette 'client.client.find_customer_by_email valie' do
           response = HotDogPrincess.client.find_customer_by_email "joe", true
           expect(response.class).to eq Array
-          expect(response).not_to eq nil
+          expect(response).not_to eq []
         end
       end
     end
