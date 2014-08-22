@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.2.1 (2014-08-22)
+
+Fixes:
+
+  - Don't alter key names on schema.
+
+## 0.2.0 (2014-08-22)
+
+Features:
+
+  - Status, Schema and View return a Hash by default.
+
 ## 0.1.3 (2014-08-22)
 
 Fixes:
