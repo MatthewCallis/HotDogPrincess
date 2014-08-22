@@ -120,14 +120,14 @@ sla      = client.sla 1
 
 # Searching: You search email with either exact match or a substring match.
 client.find_customer_by_email 'joe@exmaple.comz'
-=> [#<Hash id="26553", uid="16115/16155/Customer/26553",
+=> [#<Hash id="26553", uid="123/456/Customer/26553",
 
 client.find_customer_by_email 'not_found@brandnewusers.io'
 => []
 
 substring = true
 client.find_customer_by_email 'gmail.com', substring
-=> [#<Hash id="26553", uid="16115/16155/Customer/26553", x ~50
+=> [#<Hash id="26553", uid="123/456/Customer/26553", x ~50
 
 # Creating Customers / Tickets: We are using https://github.com/savonrb/gyoku to create XML from Hashes, so see the docs for in-depth XML constructions.
 customer_hash = {
@@ -301,8 +301,6 @@ Another useful thing about Hot Dog Princess is the GET/PUT/POST/DELETE methods a
 client.get 'Customer', "First_Name_like_" => "joe"
 => {"?xml"=>{"@version"=>"1.0", "@encoding"=>"utf-8"}...
 ```
-
-
 
 ## Contributing
 

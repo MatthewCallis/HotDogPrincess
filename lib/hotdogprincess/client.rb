@@ -116,7 +116,12 @@ module HotDogPrincess
 
     def status_json(object)
       status = status(object)
-      status_hash = schema_parse(status['Entities']['Status'])
+      if status['Entities'] and status['Entities']['Status']
+        status_hash = schema_parse(status['Entities']['Status'])
+      elsif status['entities'] and status['entities']['Status']
+        # With _output_=json the container is lowercase for some reason.
+        status_hash = schema_parse(status['entities']['Status'])
+      end
 
       JSON.generate(status_hash)
     end

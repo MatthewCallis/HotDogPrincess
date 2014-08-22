@@ -1,14 +1,16 @@
 # Change Log
 
+## 0.1.3 (2014-08-22)
+
+Fixes:
+
+  - Workaround bug in Status with `_output_=json`.
+
 ## 0.1.2 (2014-08-22)
 
 Fixes:
 
-  - Fiix Status calls.
-  - Stricter requirements for returned JSON.
-  - Safer handling of bad JSON.
-  - More specs.
-
+  - Fix Status calls.
 
 ## 0.1.1 (2014-08-21)
 
