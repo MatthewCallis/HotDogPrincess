@@ -146,22 +146,93 @@ describe "HotDogPrincess::Client" do
       clean_response = client.clean_response responses
       expect(clean_response).to eq sla_schema
     end
+
+    it 'only accepts strings' do
+      expect(client.clean_response({})).to be nil
+      expect(client.clean_response([])).to be nil
+      expect(client.clean_response(1)).to be nil
+      expect(client.clean_response(1.1)).to be nil
+      expect(client.clean_response('{ "new": true }')).not_to be nil
+    end
+
+    it 'rejects strings less than 3 characters' do
+      expect(client.clean_response('{}')).to be nil
+      expect(client.clean_response('{  }')).not_to be nil
+      expect(client.clean_response('{ "new": true }')).not_to be nil
+    end
+
+    it 'rejects invalid JSON strings' do
+      expect(client.clean_response('{  }')).not_to be nil
+      expect(client.clean_response('{ "new": true }')).not_to be nil
+      expect(client.clean_response('{ new: true }')).to be nil
+      expect(client.clean_response('New: true')).to be nil
+    end
   end
 
-  it "#schema" do
-    VCR.use_cassette('client.schema Ticket') do
-      @schema = HotDogPrincess.client.schema('Ticket')
+  describe "Schema" do
+    it "fetch schema XML" do
+      VCR.use_cassette('client.schema Ticket') do
+        @schema = HotDogPrincess.client.schema('Ticket')
+      end
+      expect(@schema).not_to eq nil
+      expect(@schema.class).to eq Hash
     end
-    expect(@schema).not_to eq nil
-    expect(@schema.class).to eq Hash
+    it "fetch schema and convert to JSON" do
+      VCR.use_cassette('client.schema Ticket') do
+        @schema = HotDogPrincess.client.schema_json('Ticket')
+      end
+      expect(@schema).not_to eq nil
+      expect(@schema.class).to eq String
+      expect(JSON.parse(@schema).class).to eq Hash
+    end
   end
 
-  it "#schema_json" do
-    VCR.use_cassette('client.schema Ticket') do
-      @schema = HotDogPrincess.client.schema_json('Ticket')
+  describe "Status" do
+    it "fetch status XML" do
+      VCR.use_cassette('client.status Ticket') do
+        @status = HotDogPrincess.client.status('Ticket')
+      end
+      expect(@status).not_to eq nil
+      expect(@status.class).to eq Hash
     end
-    expect(@schema).not_to eq nil
-    expect(@schema.class).to eq String
-    expect(JSON.parse(@schema).class).to eq Hash
+    it "fetch status and convert to JSON" do
+      VCR.use_cassette('client.status Ticket') do
+        @status = HotDogPrincess.client.status_json('Ticket')
+      end
+      expect(@status).not_to eq nil
+      expect(@status.class).to eq String
+      expect(JSON.parse(@status).class).to eq Array
+    end
   end
+
+  describe "View" do
+    it "fetch view XML" do
+      VCR.use_cassette('client.view Ticket') do
+        @view = HotDogPrincess.client.view('Ticket')
+      end
+      expect(@view).not_to eq nil
+      expect(@view.class).to eq Hash
+    end
+    it "fetch view and convert to JSON" do
+      VCR.use_cassette('client.view Ticket') do
+        @view = HotDogPrincess.client.view_json('Ticket')
+      end
+      expect(@view).not_to eq nil
+      expect(@view.class).to eq String
+      expect(JSON.parse(@view).class).to eq Array
+    end
+  end
+
+  describe "#schema_parse" do
+  end
+
+  describe "#schema_parse_array" do
+  end
+
+  describe "#schema_parse_hash" do
+  end
+
+  describe "#schema_parse_string" do
+  end
+
 end

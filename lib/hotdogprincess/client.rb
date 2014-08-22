@@ -97,11 +97,15 @@ module HotDogPrincess
     def clean_response(response)
       return nil  unless response and response.class == String
       return nil  unless response.length >= 3
-      # "\xEF", "\xBB", "\xBF"
-      if response[0].ord == 239 and response[1].ord == 187 and response[2].ord == 191
-        response_hash = JSON.parse response[3..-1]
-      else
-        response_hash = JSON.parse response
+      begin
+        # "\xEF", "\xBB", "\xBF"
+        if response[0].ord == 239 and response[1].ord == 187 and response[2].ord == 191
+          response_hash = JSON.parse response[3..-1]
+        else
+          response_hash = JSON.parse response
+        end
+      rescue
+        response_hash = nil
       end
       response_hash
     end
@@ -112,7 +116,7 @@ module HotDogPrincess
 
     def status_json(object)
       status = status(object)
-      status_hash = schema_parse(status['entities']['Status'])
+      status_hash = schema_parse(status['Entities']['Status'])
 
       JSON.generate(status_hash)
     end
