@@ -200,13 +200,13 @@ module HotDogPrincess
       output = {}
       input_hash.each do |key, value|
         if value.class == Array
-          output[key.to_s] = schema_parse_array(value)
+          output[key.to_s.name_to_key] = schema_parse_array(value)
         elsif value.class == Hash
-          output[key.to_s] = schema_parse_hash(value)
+          output[key.to_s.name_to_key] = schema_parse_hash(value)
         elsif value.class == String
-          output[key.to_s] = schema_parse_string(value)
+          output[key.to_s.name_to_key] = schema_parse_string(value)
         else
-          output[key.to_s] = value
+          output[key.to_s.name_to_key] = value
         end
       end
       output

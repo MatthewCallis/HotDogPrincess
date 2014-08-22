@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.2.2 (2014-08-22)
+
+Fixes:
+
+  - DO alter key names on schema.
+
 ## 0.2.1 (2014-08-22)
 
 Fixes:
