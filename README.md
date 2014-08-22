@@ -48,22 +48,32 @@ From here you can do all sorts of wonderful things:
 
 ```ruby
 # Schema, Status, View
-client.schema 'Customer'
-client.schema 'Ticket'
-client.schema 'Sla'
+client.schema_raw 'Customer'
+client.schema_raw 'Ticket'
+client.schema_raw 'Sla'
 => {"?xml"=>{"@version"=>"1.0", "@encoding"=>"utf-8"}, "Customer"=> ...
 
-client.status 'Customer'
-client.status 'Ticket'
-client.status 'Sla'
+client.status_raw 'Customer'
+client.status_raw 'Ticket'
+client.status_raw 'Sla'
 => {"?xml"=>{"@version"=>"1.0", "@encoding"=>"utf-8"}, "entities"=> ...
 
 
 # Well that's neat, but XML? What the hell is wrong with you, is it 2001‽
+client.schema 'Customer'
+client.schema 'Ticket'
+client.schema 'Sla'
+=> #<Hash ...
+
 client.schema_json 'Customer'
 client.schema_json 'Ticket'
 client.schema_json 'Sla'
 => # See below for important details about all JSON returns.
+
+client.status 'Customer'
+client.status 'Ticket'
+client.status 'Sla'
+=> #<Hash ...
 
 client.status_json 'Customer'
 client.status_json 'Ticket'

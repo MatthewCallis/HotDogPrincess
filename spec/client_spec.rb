@@ -172,6 +172,13 @@ describe "HotDogPrincess::Client" do
   describe "Schema" do
     it "fetch schema XML" do
       VCR.use_cassette('client.schema Ticket') do
+        @schema = HotDogPrincess.client.schema_raw('Ticket')
+      end
+      expect(@schema).not_to eq nil
+      expect(@schema.class).to eq Hash
+    end
+    it "fetch schema and convert to a Hash" do
+      VCR.use_cassette('client.schema Ticket') do
         @schema = HotDogPrincess.client.schema('Ticket')
       end
       expect(@schema).not_to eq nil
@@ -190,10 +197,17 @@ describe "HotDogPrincess::Client" do
   describe "Status" do
     it "fetch status XML" do
       VCR.use_cassette('client.status Ticket') do
-        @status = HotDogPrincess.client.status('Ticket')
+        @status = HotDogPrincess.client.status_raw('Ticket')
       end
       expect(@status).not_to eq nil
       expect(@status.class).to eq Hash
+    end
+    it "fetch status and convert to a Hash" do
+      VCR.use_cassette('client.status Ticket') do
+        @status = HotDogPrincess.client.status('Ticket')
+      end
+      expect(@status).not_to eq nil
+      expect(@status.class).to eq Array
     end
     it "fetch status and convert to JSON" do
       VCR.use_cassette('client.status Ticket') do
@@ -208,10 +222,17 @@ describe "HotDogPrincess::Client" do
   describe "View" do
     it "fetch view XML" do
       VCR.use_cassette('client.view Ticket') do
-        @view = HotDogPrincess.client.view('Ticket')
+        @view = HotDogPrincess.client.view_raw('Ticket')
       end
       expect(@view).not_to eq nil
       expect(@view.class).to eq Hash
+    end
+    it "fetch view convert to a Hash" do
+      VCR.use_cassette('client.view Ticket') do
+        @view = HotDogPrincess.client.view('Ticket')
+      end
+      expect(@view).not_to eq nil
+      expect(@view.class).to eq Array
     end
     it "fetch view and convert to JSON" do
       VCR.use_cassette('client.view Ticket') do

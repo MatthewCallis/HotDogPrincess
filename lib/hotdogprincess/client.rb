@@ -110,41 +110,61 @@ module HotDogPrincess
       response_hash
     end
 
-    def status(object)
+    def status_raw(object)
       get "#{object.to_s}/status"
     end
 
-    def status_json(object)
-      status = status(object)
+    def status(object)
+      status = status_raw(object)
       if status['Entities'] and status['Entities']['Status']
         status_hash = schema_parse(status['Entities']['Status'])
       elsif status['entities'] and status['entities']['Status']
         # With _output_=json the container is lowercase for some reason.
         status_hash = schema_parse(status['entities']['Status'])
       end
+      status_hash
+    end
 
+    def status_json(object)
+      status = status_raw(object)
+      if status['Entities'] and status['Entities']['Status']
+        status_hash = schema_parse(status['Entities']['Status'])
+      elsif status['entities'] and status['entities']['Status']
+        # With _output_=json the container is lowercase for some reason.
+        status_hash = schema_parse(status['entities']['Status'])
+      end
       JSON.generate(status_hash)
     end
 
-    def view(object)
+    def view_raw(object)
       get "#{object.to_s}/view"
     end
 
-    def view_json(object)
-      views = view(object)
+    def view(object)
+      views = view_raw(object)
       views_hash = schema_parse(views['Entities']['View'])
+      views_hash
+    end
 
+    def view_json(object)
+      views = view_raw(object)
+      views_hash = schema_parse(views['Entities']['View'])
       JSON.generate(views_hash)
     end
 
-    def schema(object)
+    def schema_raw(object)
       get "#{object.to_s}/schema"
     end
 
-    def schema_json(object)
-      schema = schema(object)
+    def schema(object)
+      schema = schema_raw(object)
       schema_hash = schema_parse_hash(schema[object])
+      schema_hash
+    end
 
+    def schema_json(object)
+      schema = schema_raw(object)
+      schema_hash = schema_parse_hash(schema[object])
       JSON.generate(schema_hash)
     end
 
