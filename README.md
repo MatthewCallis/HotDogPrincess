@@ -6,7 +6,10 @@ _-- "Their message says, Baby... Us... Trouble... Time."_
 
 Integrate with the [Parature](http://www.parature.com/) API. It's gunna be so flippin' awesome!
 
-Currently a WIP.
+## Current Modules Supported
+- Custoemrs
+- SLAs
+- Tickets
 
 ## Installation
 
