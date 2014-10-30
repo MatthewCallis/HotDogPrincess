@@ -1,4 +1,5 @@
 require 'hotdogprincess/client'
+require 'hotdogprincess/error'
 require 'hotdogprincess/core_extensions'
 
 module HotDogPrincess

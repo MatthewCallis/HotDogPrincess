@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'gyoku', '~> 1'
 gem 'nori', '~> 2'
+gem 'rest-client'
 
 group :test do
   gem 'rake'
@@ -10,6 +11,7 @@ group :test do
   gem 'webmock', '>= 1.9'
   gem 'simplecov-rcov'
   gem 'faker'
+  gem 'nokogiri'
 end
 
 gemspec

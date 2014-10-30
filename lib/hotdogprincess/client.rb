@@ -3,6 +3,7 @@ require "hotdogprincess/version"
 require "hotdogprincess/client/customers"
 require "hotdogprincess/client/tickets"
 require "hotdogprincess/client/slas"
+require 'hotdogprincess/error'
 
 module HotDogPrincess
 
@@ -26,7 +27,11 @@ module HotDogPrincess
         _output_: @output_format,
         _token_: @token
       }.merge(options)
-      @last_response = RestClient.get url, { params: options }
+      begin
+        @last_response = RestClient.get url, { params: options }
+      rescue => e
+        raise HotDogPrincess::Error.new(e.response, self)
+      end
       clean_response @last_response
     end
 
@@ -35,7 +40,11 @@ module HotDogPrincess
       options = {
         content_type: :xml
       }.merge(options)
-      @last_response = RestClient.post url, body, options
+      begin
+        @last_response = RestClient.post url, body, options
+      rescue => e
+        raise HotDogPrincess::Error.new(e.response, self)
+      end
       @last_response
     end
 
@@ -44,7 +53,11 @@ module HotDogPrincess
       options = {
         content_type: :xml
       }.merge(options)
-      @last_response = RestClient.put url, body, options
+      begin
+        @last_response = RestClient.put url, body, options
+      rescue => e
+        raise HotDogPrincess::Error.new(e.response, self)
+      end
       @last_response
     end
 
@@ -54,7 +67,11 @@ module HotDogPrincess
         _output_: @output_format,
         _token_: @token
       }.merge(options)
-      @last_response = RestClient.delete url, { params: options }
+      begin
+        @last_response = RestClient.delete url, { params: options }
+      rescue => e
+        raise HotDogPrincess::Error.new(e.response, self)
+      end
       @last_response
     end
 

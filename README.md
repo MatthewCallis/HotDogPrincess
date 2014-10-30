@@ -312,6 +312,10 @@ client.get 'Customer', "First_Name_like_" => "joe"
 => {"?xml"=>{"@version"=>"1.0", "@encoding"=>"utf-8"}...
 ```
 
+## Notes
+
+- Nil values are stripped from hashes to be used, Parature does not accept the `xsi:nil` values.
+
 ## Contributing
 
 1. Fork it

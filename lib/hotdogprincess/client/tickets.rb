@@ -62,6 +62,8 @@ module HotDogPrincess
 
         ticket = get "Ticket/#{new_ticket_xml['Ticket']['@id']}", _history_: false
 
+        return  unless ticket and ticket['Ticket']
+
         parse_ticket ticket['Ticket']
       end
 

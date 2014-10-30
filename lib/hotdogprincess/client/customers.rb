@@ -62,6 +62,8 @@ module HotDogPrincess
 
         customer = get "Customer/#{new_customer_xml['Customer']['@id']}", _history_: false
 
+        return  unless customer and customer['Customer']
+
         parse_customer customer['Customer']
       end
 

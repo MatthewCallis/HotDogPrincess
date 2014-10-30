@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hotdogprincess (0.1.0)
+    hotdogprincess (0.2.2)
       gyoku (~> 1)
       nori (~> 2)
 
@@ -19,9 +19,17 @@ GEM
     gyoku (1.1.1)
       builder (>= 2.1.2)
     i18n (0.6.11)
+    mime-types (2.4.3)
+    mini_portile (0.6.0)
     multi_json (1.10.1)
+    netrc (0.8.0)
+    nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
     nori (2.4.0)
     rake (10.3.2)
+    rest-client (1.7.2)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -55,8 +63,10 @@ DEPENDENCIES
   faker
   gyoku (~> 1)
   hotdogprincess!
+  nokogiri
   nori (~> 2)
   rake
+  rest-client
   rspec (~> 3.0.0)
   simplecov-rcov
   vcr (~> 2.9.2)
