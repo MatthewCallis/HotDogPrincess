@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'gyoku', '~> 1'
   spec.add_runtime_dependency 'nori', '~> 2'
+  spec.add_runtime_dependency 'rest-client', '~> 1'
 
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 1.9.2'

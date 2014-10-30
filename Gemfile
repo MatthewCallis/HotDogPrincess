@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'gyoku', '~> 1'
 gem 'nori', '~> 2'
-gem 'rest-client'
+gem 'rest-client', '~> 1'
 
 group :test do
   gem 'rake'

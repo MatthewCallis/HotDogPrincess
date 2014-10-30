@@ -1,9 +1,10 @@
 PATH
   remote: .
   specs:
-    hotdogprincess (0.2.2)
+    hotdogprincess (0.3.0)
       gyoku (~> 1)
       nori (~> 2)
+      rest-client (~> 1)
 
 GEM
   remote: https://rubygems.org/
@@ -66,7 +67,7 @@ DEPENDENCIES
   nokogiri
   nori (~> 2)
   rake
-  rest-client
+  rest-client (~> 1)
   rspec (~> 3.0.0)
   simplecov-rcov
   vcr (~> 2.9.2)

@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.3.0 (2014-10-30)
+
+Features:
+
+  - Return the error from Parature as an exception rather than RestClient errors.
+
+Fixes:
+
+  - Hashes strip `nil` values.
+  - Typos in README.
+
+
 ## 0.2.2 (2014-08-22)
 
 Fixes:
