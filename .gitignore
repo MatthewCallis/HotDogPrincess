@@ -4,3 +4,4 @@ spec/vcr_cassettes
 notes/
 coverage/
 hotdogprincess-*.gem
+.ruby-version

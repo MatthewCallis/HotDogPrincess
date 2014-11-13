@@ -6,7 +6,7 @@ gem 'rest-client', '~> 1'
 
 group :test do
   gem 'rake'
-  gem 'rspec', '~> 3.0.0'
+  gem 'rspec', '~> 3'
   gem 'vcr', '~> 2.9.2'
   gem 'webmock', '>= 1.9'
   gem 'simplecov-rcov'
