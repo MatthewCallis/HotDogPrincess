@@ -247,12 +247,6 @@ describe "HotDogPrincess::Client" do
   describe "#schema_parse" do
   end
 
-  describe "#schema_parse_array" do
-  end
-
-  describe "#schema_parse_hash" do
-  end
-
   describe "#schema_parse_string" do
   end
 

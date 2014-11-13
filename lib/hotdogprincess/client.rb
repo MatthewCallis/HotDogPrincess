@@ -175,58 +175,29 @@ module HotDogPrincess
 
     def schema(object)
       schema = schema_raw(object)
-      schema_hash = schema_parse_hash(schema[object])
+      schema_hash = schema_parse(schema[object])
       schema_hash
     end
 
     def schema_json(object)
       schema = schema_raw(object)
-      schema_hash = schema_parse_hash(schema[object])
+      schema_hash = schema_parse(schema[object])
       JSON.generate(schema_hash)
     end
 
     def schema_parse(input)
-      output = input
-      if input.class == Array
-        output = schema_parse_array(input)
-      elsif input.class == Hash
-        output = schema_parse_hash(input)
-      elsif input.class == String
-        output = schema_parse_string(input)
-      end
-      output
-    end
-
-    def schema_parse_array(input_array)
-      output = []
-      input_array.each do |item|
-        if item.class == Array
-          output.push  schema_parse_array(item)
-        elsif item.class == Hash
-          output.push  schema_parse_hash(item)
-        elsif value.class == String
-          output.push schema_parse_string(item)
-        else
-          output.push  item
+      if input.is_a? String
+        schema_parse_string(input)
+      elsif input.is_a? Array
+        input.map { |item| schema_parse(item) }
+      elsif input.is_a? Hash
+        input.inject({}) do |memo, (key, value)|
+          memo[key.to_s.name_to_key] = schema_parse(value)
+          memo
         end
+      else
+        input
       end
-      output
-    end
-
-    def schema_parse_hash(input_hash)
-      output = {}
-      input_hash.each do |key, value|
-        if value.class == Array
-          output[key.to_s.name_to_key] = schema_parse_array(value)
-        elsif value.class == Hash
-          output[key.to_s.name_to_key] = schema_parse_hash(value)
-        elsif value.class == String
-          output[key.to_s.name_to_key] = schema_parse_string(value)
-        else
-          output[key.to_s.name_to_key] = value
-        end
-      end
-      output
     end
 
     def schema_parse_string(input_string)

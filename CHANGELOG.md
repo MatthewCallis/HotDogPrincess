@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.1 (2014-11-13)
+
+Fixes:
+
+  - Simplify and speed up schema parsing.
+
 ## 0.3.0 (2014-10-30)
 
 Features:
@@ -10,7 +16,6 @@ Fixes:
 
   - Hashes strip `nil` values.
   - Typos in README.
-
 
 ## 0.2.2 (2014-08-22)
 
