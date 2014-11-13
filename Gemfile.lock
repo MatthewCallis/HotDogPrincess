@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hotdogprincess (0.3.0)
+    hotdogprincess (0.3.1)
       gyoku (~> 1)
       nori (~> 2)
       rest-client (~> 1)
