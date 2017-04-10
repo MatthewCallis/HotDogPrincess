@@ -4,7 +4,7 @@
 
 _-- "Their message says, Baby... Us... Trouble... Time."_
 
-Integrate with the [Parature](http://www.parature.com/) API. It's gunna be so flippin' awesome!
+Integrate with the [Parature](https://www.parature.com/) API. It's gunna be so flippin' awesome!
 
 ## Current Modules Supported
 - Customers
