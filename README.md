@@ -35,6 +35,16 @@ You will need your host, the account ID, the department ID and your API token.
 
 You will need to make a copy of `spec/hotdogprincess.sample.yml` as `spec/hotdogprincess.yml` with your own testing credentials.
 
+### Deploying
+
+```
+bundle install
+bundle exec rake spec
+bundle exec gem bump --version x.y.z
+bundle exec gem tag
+bundle exec gem release
+```
+
 ### Examples
 
 You can use the client in two possible way, or more if you're really brave and creative:
