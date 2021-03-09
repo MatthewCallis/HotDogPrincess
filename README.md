@@ -1,3 +1,5 @@
+# R.I.P. Parature is dead, and sadly so is Hot Dog Princess.
+
 # Hot Dog Princess
 
 ![Hot Dog Princess](https://raw.githubusercontent.com/MatthewCallis/HotDogPrincess/master/hdp.png)
